@@ -13,3 +13,7 @@
 
 Остановка запущенного контейнера docker stop
 Доступ в bash внутренней системы, запущенной в контейнере docker exec -it d78d66480243 bash
+
+Для локального тестирования приложения добавить в pom.xml зависимость spring-boot-maven-plugin, перед сборкой docker-image снова убрать.
+Для локального тестирования убрать packaging из pom.xml.
+Убрать SpringBootServletInitializer из класса SpringBootTomcatApplication.
