@@ -10,3 +10,6 @@
 Для запуска docker-container:
     1. Проверить, что контейнер работает docker ps
     2. Выполнить docker run -p 8080:8080 -t springio/gs-spring-boot-docker, где последнее - имя в тэге repository pom.xml.
+
+Остановка запущенного контейнера docker stop
+Доступ в bash внутренней системы, запущенной в контейнере docker exec -it d78d66480243 bash
