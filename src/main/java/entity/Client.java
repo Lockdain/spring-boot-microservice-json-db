@@ -1,31 +1,21 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 public class Client {
     @JsonProperty
+    @Getter
+    @Setter
     private String clientId;
 
     @JsonProperty
+    @Getter
+    @Setter
     private List<Pair> accounts;
-
-    public String getСlientId() {
-        return clientId;
-    }
-
-    public void setСlientId(String сlientId) {
-        clientId = сlientId;
-    }
-
-    public List<Pair> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Pair> accounts) {
-        this.accounts = accounts;
-    }
 
     @Override
     public String toString() {
