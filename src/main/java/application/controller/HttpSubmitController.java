@@ -1,19 +1,18 @@
-package controller;
+package application.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dao.ClientRepository;
-import entity.Client;
+import application.dao.ClientRepository;
+import application.entity.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import entity.RawData;
+import application.entity.RawData;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ public class HttpSubmitController {
     private static final Logger log = LoggerFactory.getLogger(HttpSubmitController.class);
 
     @Autowired
-    @Qualifier("clientRepository")
     private ClientRepository clientRepository;
 
     @GetMapping("/submit")
@@ -45,9 +43,7 @@ public class HttpSubmitController {
     public @ResponseBody
     Iterable<Client> getAllClients() {
         Iterable<Client> all = clientRepository.findAll();
-        all.forEach(client -> {
-            log.info(client.toString());
-        });
+        all.forEach(client -> log.info(client.toString()));
 
         return all;
     }

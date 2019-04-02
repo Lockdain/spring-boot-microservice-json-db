@@ -1,25 +1,30 @@
-package entity;
+package application.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.List;
 
 @Entity
 public class Client {
 
-    @JsonProperty("ClientId")
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
+    @Setter
+    private long id;
+
+    @JsonProperty("ClientId")
     @Getter
     @Setter
     private String clientId;
 
     @JsonProperty("Accounts")
-    @Getter
-    @Setter
+    @OneToMany(targetEntity = Pair.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Pair> accounts;
 
     @Override
