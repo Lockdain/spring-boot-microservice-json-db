@@ -16,6 +16,6 @@
 
 Для локального тестирования приложения добавить в pom.xml зависимость spring-boot-maven-plugin, перед сборкой docker-image снова убрать.
 Для локального тестирования убрать packaging из pom.xml.
-Убрать SpringBootServletInitializer из класса SpringBootTomcatApplication.
+Убрать SpringBootServletInitializer из класса application.SpringBootApplication.
 
 Ветка для разворачивания проекта во внутреннем контейнере Spring Boot.
