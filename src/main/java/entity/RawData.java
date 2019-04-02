@@ -1,23 +1,16 @@
 package entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class RawData {
 
+    @Getter
+    @Setter
     private String content;
+
+    @Getter
+    @Setter
     private String jsonString;
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getJsonString() {
-        return jsonString;
-    }
-
-    public void setJsonString(String jsonString) {
-        this.jsonString = jsonString;
-    }
 }

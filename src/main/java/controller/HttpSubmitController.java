@@ -2,41 +2,64 @@ package controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dao.ClientRepository;
 import entity.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import entity.RawData;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 
 @Controller
 public class HttpSubmitController {
 
-    // @Autowired
-   // ClientRepository clientRepository;
+    private static final Logger log = LoggerFactory.getLogger(HttpSubmitController.class);
+
+    @Autowired
+    @Qualifier("clientRepository")
+    private ClientRepository clientRepository;
 
     @GetMapping("/submit")
     public String submitForm(Model model) {
         model.addAttribute("rawdata", new RawData());
+
         return "submit";
     }
 
     @PostMapping("/submit")
     public String submitAccept(@ModelAttribute RawData submit) throws IOException {
-        System.out.println(mapToDb(submit));
-        submit.setJsonString(mapToDb(submit));
+        System.out.println(persist(submit));
+
         return "result";
     }
 
-    public String mapToDb(@ModelAttribute RawData submit) throws IOException {
+    @GetMapping("/all")
+    public @ResponseBody
+    Iterable<Client> getAllClients() {
+        Iterable<Client> all = clientRepository.findAll();
+        all.forEach(client -> {
+            log.info(client.toString());
+        });
+
+        return all;
+    }
+
+    private String persist(@ModelAttribute RawData submit) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<Client> mapType = new TypeReference<Client>(){};
+        TypeReference<Client> mapType = new TypeReference<Client>() {
+        };
         Client client = mapper.readValue(submit.getContent(), mapType);
+        clientRepository.save(client);
+
         return client.toString();
-        // clientRepository.save(client);
     }
 
 }
