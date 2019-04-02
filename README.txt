@@ -19,3 +19,13 @@
 Убрать SpringBootServletInitializer из класса application.SpringBootApplication.
 
 Ветка для разворачивания проекта во внутреннем контейнере Spring Boot.
+
+Требования к БД:
+
+1. База данных MySQL со схемой vtbpilot
+2. Пользователь spring/spring
+
+Запуск локального сервера Kafka (лучше не использовать пути с пробелами, не использовать кавычки в путях конфигурационных файлов):
+
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+.\bin\windows\kafka-server-start.bat .\config\server.properties

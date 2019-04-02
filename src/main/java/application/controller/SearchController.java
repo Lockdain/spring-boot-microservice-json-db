@@ -2,7 +2,7 @@ package application.controller;
 
 import application.dao.ClientRepository;
 import application.entity.Client;
-import application.entity.ClientId;
+import application.model.ClientId;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
