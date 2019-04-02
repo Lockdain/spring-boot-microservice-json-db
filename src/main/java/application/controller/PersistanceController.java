@@ -16,11 +16,12 @@ import application.entity.RawData;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Controller
-public class HttpSubmitController {
+public class PersistanceController {
 
-    private static final Logger log = LoggerFactory.getLogger(HttpSubmitController.class);
+    private static final Logger log = LoggerFactory.getLogger(PersistanceController.class);
 
     @Autowired
     private ClientRepository clientRepository;
@@ -34,9 +35,13 @@ public class HttpSubmitController {
 
     @PostMapping("/submit")
     public String submitAccept(@ModelAttribute RawData submit) throws IOException {
-        System.out.println(persist(submit));
+        if ("".equals(submit.getContent()) || Objects.isNull(submit.getContent())) {
+            throw new IllegalArgumentException("The provided JSON string is empty!");
+        }
 
-        return "result";
+        persist(submit);
+
+        return "resultSubmit";
     }
 
     @GetMapping("/all")
@@ -49,13 +54,18 @@ public class HttpSubmitController {
     }
 
     private String persist(@ModelAttribute RawData submit) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        TypeReference<Client> mapType = new TypeReference<Client>() {
-        };
-        Client client = mapper.readValue(submit.getContent(), mapType);
+        Client client = mapClient(submit);
         clientRepository.save(client);
 
         return client.toString();
+    }
+
+    private Client mapClient(@ModelAttribute RawData submit) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<Client> mapType = new TypeReference<Client>() {
+        };
+
+        return mapper.readValue(submit.getContent(), mapType);
     }
 
 }
