@@ -1,7 +1,9 @@
 package application.controller;
 
+import application.entity.Client;
 import application.kafka.Producer;
 import application.model.RawData;
+import application.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +36,10 @@ public class KafkaController {
         if ("".equals(submit.getContent()) || Objects.isNull(submit.getContent())) {
             throw new IllegalArgumentException("The provided JSON string is empty!");
         }
-        producer.sendMessage("test");
+        // parse input json string
+        Client client = Mapper.mapClient(submit);
+
+        producer.sendMessage(client);
         return "resultSubmit";
     }
 }

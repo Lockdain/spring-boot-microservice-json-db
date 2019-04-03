@@ -3,8 +3,7 @@ package application.controller;
 import application.dao.ClientRepository;
 import application.entity.Client;
 import application.model.ClientId;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import application.util.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -44,19 +42,11 @@ public class SearchController {
             log.info("Nothing is found");
         }
 
-        String jsonString = serialize(client);
+        String jsonString = Mapper.serialize(client);
         log.info("JSON: " + jsonString);
         clientId.setJson(jsonString);
 
         return "resultSearchById";
     }
 
-    public String serialize(Client client) throws JsonProcessingException {
-        if (Objects.isNull(client)) {
-            throw new IllegalArgumentException("Client is null");
-        }
-        ObjectMapper mapper = new ObjectMapper();
-
-        return mapper.writeValueAsString(client);
-    }
 }

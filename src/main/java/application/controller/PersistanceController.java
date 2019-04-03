@@ -1,7 +1,6 @@
 package application.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import application.dao.PersistanceManager;
 import application.dao.ClientRepository;
 import application.entity.Client;
 import org.slf4j.Logger;
@@ -39,7 +38,7 @@ public class PersistanceController {
             throw new IllegalArgumentException("The provided JSON string is empty!");
         }
 
-        persist(submit);
+        PersistanceManager.persist(clientRepository, submit);
 
         return "resultSubmit";
     }
@@ -51,21 +50,6 @@ public class PersistanceController {
         all.forEach(client -> log.info(client.toString()));
 
         return all;
-    }
-
-    private String persist(@ModelAttribute RawData submit) throws IOException {
-        Client client = mapClient(submit);
-        clientRepository.save(client);
-
-        return client.toString();
-    }
-
-    private Client mapClient(@ModelAttribute RawData submit) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        TypeReference<Client> mapType = new TypeReference<Client>() {
-        };
-
-        return mapper.readValue(submit.getContent(), mapType);
     }
 
 }
