@@ -1,7 +1,7 @@
 package application.kafka.stream;
 
 import application.entity.Client;
-import application.kafka.stream.intf.ClientStreams;
+import application.kafka.stream.intf.ClientStreamsBinding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.MessageChannel;
@@ -15,19 +15,19 @@ public class ClientProduceStreamService {
 
     private final static Logger logger = LoggerFactory.getLogger(ClientProduceStreamService.class);
 
-    private final ClientStreams clientStreams;
+    private final ClientStreamsBinding clientStreamsBinding;
 
-    public ClientProduceStreamService(ClientStreams clientStreams) {
-        this.clientStreams = clientStreams;
+    public ClientProduceStreamService(ClientStreamsBinding clientStreamsBinding) {
+        this.clientStreamsBinding = clientStreamsBinding;
     }
 
     public void sendClient(final Client client) {
         logger.info("Sending client {}", client);
 
-        MessageChannel messageChannel = clientStreams.outboundClients();
-        messageChannel.send(MessageBuilder
-                .withPayload(client)
-                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                .build());
+//        MessageChannel messageChannel = clientStreamsBinding.outboundClients();
+//        messageChannel.send(MessageBuilder
+//                .withPayload(client)
+//                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+//                .build());
     }
 }

@@ -12,4 +12,5 @@ public class ClientId {
     @Getter
     @Setter
     private String json;
+
 }
