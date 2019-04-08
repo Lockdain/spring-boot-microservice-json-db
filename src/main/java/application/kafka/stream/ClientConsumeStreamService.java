@@ -16,7 +16,7 @@ import org.springframework.cloud.stream.binder.kafka.streams.InteractiveQuerySer
 
 import java.util.Arrays;
 
-@EnableBinding(ClientStreamsBinding.class)
+//@EnableBinding(ClientStreamsBinding.class)
 public class ClientConsumeStreamService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -25,7 +25,7 @@ public class ClientConsumeStreamService {
     private InteractiveQueryService interactiveQueryService;
 
 
-    @StreamListener
+   // @StreamListener
     public void process(@Input (Constants.KAFKA_TOPIC)KStream<String, Client> clients, String id) {
 //        KGroupedStream<String, String> groupedByWord = clients
 //                .flatMapValues(client -> Arrays.asList())

@@ -10,7 +10,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
-@Service
+//@Service
 public class ClientProduceStreamService {
 
     private final static Logger logger = LoggerFactory.getLogger(ClientProduceStreamService.class);
